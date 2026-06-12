@@ -40,6 +40,84 @@ module control  (
 // ------------------------------ 
 always @(instr_op)
 begin 
-   // Put your solution here
+    // default values
+    reg_dst    = 1'b0;
+    branch     = 1'b0;
+    mem_read   = 1'b0;
+    mem_to_reg = 1'b0;
+    alu_op     = 2'b00;
+    mem_write  = 1'b0;
+    alu_src    = 1'b0;
+    reg_write  = 1'b0;
+
+    case (instr_op)
+
+        `OPCODE_R_TYPE: begin
+            reg_dst    = 1'b1;
+            branch     = 1'b0;
+            mem_read   = 1'b0;
+            mem_to_reg = 1'b0;
+            alu_op     = 2'b10;
+            mem_write  = 1'b0;
+            alu_src    = 1'b0;
+            reg_write  = 1'b1;
+        end
+
+        `OPCODE_LOAD_WORD: begin
+            reg_dst    = 1'b0;
+            branch     = 1'b0;
+            mem_read   = 1'b1;
+            mem_to_reg = 1'b1;
+            alu_op     = 2'b00;
+            mem_write  = 1'b0;
+            alu_src    = 1'b1;
+            reg_write  = 1'b1;
+        end
+
+        `OPCODE_STORE_WORD: begin
+            reg_dst    = 1'b0;
+            branch     = 1'b0;
+            mem_read   = 1'b0;
+            mem_to_reg = 1'b0;
+            alu_op     = 2'b00;
+            mem_write  = 1'b1;
+            alu_src    = 1'b1;
+            reg_write  = 1'b0;
+        end
+
+        `OPCODE_BRANCH_EQ: begin
+            reg_dst    = 1'b0;
+            branch     = 1'b1;
+            mem_read   = 1'b0;
+            mem_to_reg = 1'b0;
+            alu_op     = 2'b01;
+            mem_write  = 1'b0;
+            alu_src    = 1'b0;
+            reg_write  = 1'b0;
+        end
+
+        `OPCODE_ADDI: begin
+            reg_dst    = 1'b0;
+            branch     = 1'b0;
+            mem_read   = 1'b0;
+            mem_to_reg = 1'b0;
+            alu_op     = 2'b00;
+            mem_write  = 1'b0;
+            alu_src    = 1'b1;
+            reg_write  = 1'b1;
+        end
+
+        default: begin
+            reg_dst    = 1'b0;
+            branch     = 1'b0;
+            mem_read   = 1'b0;
+            mem_to_reg = 1'b0;
+            alu_op     = 2'b00;
+            mem_write  = 1'b0;
+            alu_src    = 1'b0;
+            reg_write  = 1'b0;
+        end
+
+    endcase
 end 
 endmodule
